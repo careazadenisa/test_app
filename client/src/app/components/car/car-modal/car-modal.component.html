@@ -1,0 +1,52 @@
+<div class='modal-header'>
+    <h4 class='modal-title'>{{id_car ? 'Modificare' : 'Adăugare'}} Mașină</h4>          <!--from car-modal.component.ts-->
+  </div>
+  
+  <div class='modal-body'>
+    <div class='row'>
+      <label class='col-2 control-label'>Denumire marcă</label>
+      <div class='col-9'>
+        <input [(ngModel)]='modal.brand' class='form-control' placeholder='Denumire marcă...' maxlength='255' #modal.brand="ngModel" required/>
+        <div *ngIf="modal.brand.invalid && (modal.brand.dirty || modal.brand.touched)" class="alert alert-danger">
+          <div *ngIf="modal.brand.errors.required">Marca este obligatorie.</div>
+      </div>
+      </div>
+    
+      <label class='col-2 control-label'>Denumire model</label>
+      <div class='col-4'>
+        <input [(ngModel)]='modal.modelcar' class='form-control' placeholder='Denumire model...' maxlength='255' #modal.modelcar="ngModel" required/>
+        <div *ngIf="modal.modelcar.invalid && (modal.modelcar.dirty || modal.modelcar.touched)" class="alert alert-danger">
+          <div *ngIf="modal.modelcar.errors.required">Modelul este obligatoriu.</div>
+      </div>
+      </div>
+
+      <label class='col-5 p-2 text-start'>Anul fabricației</label>
+      <div class='col-1'>
+        <input [(ngModel)]='modal.fabricationyear' class="form-control" placeholder="Anul fabricatiei.." maxlength="4" #modal.fabricationyear="ngModel"/>
+        <div *ngIf="modal.fabricationyear.invalid && (modal.fabricationyear.dirty || modal.fabricationyear.touched)" class="alert alert-danger">
+          <div *ngIf="modal.fabricationyear.errors.required">Anul fabricației este obligatoriu.</div>
+      </div>
+      </div>
+
+      <label class='col-5 p-2 text-start'>Capacitate cilindrică</label>
+      <div class='col-1'>
+        <input [(ngModel)]='modal.cylindercapacity' class="form-control" placeholder="Capacitate cilindrică.." maxlength="4" #modal.cylindercapacity="ngModel"/>
+        <div *ngIf="modal.cylindercapacity.invalid && (modal.cylindercapacity.dirty || modal.cylindercapacity.touched)" class="alert alert-danger">
+          <div *ngIf="modal.cylindercapacity.errors.required">Capacitatea cilindrică este obligatorie.</div>
+      </div>
+      </div>
+
+      <label class='col-5 p-2 text-start'>Taxa de impozit</label>
+      <div class='col-1'>
+        <input [(ngModel)]='modal.tax' class="form-control" placeholder="Taxa de impozit" maxlength="4" #modal.tax="ngModel" (ngModelChange)="calculateTax()" required=""/>
+        <div *ngIf="modal.tax.invalid && (modal.tax.dirty || modal.tax.touched)" class="alert alert-danger">
+          <div *ngIf="modal.tax.errors.required">Taxa de impozit este obligatorie.</div>
+      </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class='modal-footer'>
+    <button type='button' class='btn btn-outline-dark' (click)='activeModal.dismiss()'>Renunță</button>
+    <button type='button' class='btn btn-success' (click)='save()'>Salvează</button>
+</div>

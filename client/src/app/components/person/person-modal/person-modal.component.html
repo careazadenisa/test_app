@@ -1,0 +1,63 @@
+<div class='modal-header'>
+    <h4 class='modal-title'>{{id_person ? 'Modificare' : 'Adăugare'}} Persoana</h4>                       <!-- Header of the modal with the title "Modificare Persoana" or "Adaugare Persoana" depending on the value of id_person -->
+</div>
+  
+  <div class='modal-body'>                                                                                <!-- The body section of the modal, which contains the entries for the person data -->
+    <div class='row'>
+      <label class='col-2 control-label'>Nume*</label>
+      <div class='col-9'>
+        <!-- Name input, which allows the user to enter the person's name -->
+        <input [(ngModel)]='modal.lastname' class='form-control' placeholder='Nume...' maxlength='255' #modal.lastname="ngModel" required/>
+        <!--ngModel is an Angular directive that binds to the model's lastname property-->
+        <!--#modal.lastname is a reference that allows us to access information about the current entry later in the template-->
+        <!--required is an attribute that specifies that this field is required-->
+        <div *ngIf="modal.lastname.invalid && (modal.lastname.dirty || modal.lastname.touched)" class="alert alert-danger">        <!--if the input is not valid and has been touched or modified by the user.-->
+          <div *ngIf="modal.lastname.errors.required">Numele este obligatoriu.</div>                                               <!--than displays an error message-->
+      </div>
+      </div>
+    
+      <label class='col-2 control-label'>Prenume*</label>
+      <div class='col-4'>
+        <input  [(ngModel)]='modal.firstname' class='form-control' placeholder='Prenume...' maxlength='255' #modal.firstname="ngModel" required/>
+        <div *ngIf="modal.firstname.invalid && (modal.firstname.dirty || modal.firstname.touched)" class="alert alert-danger">
+          <div *ngIf="modal.firstname.errors.required">Prenumele este obligatoriu.</div>
+      </div>
+      </div>
+
+      <label class='col-5 p-2 text-start'>CNP*</label>
+      <div class='col-1'>
+        <input [(ngModel)]='modal.cnp' class="form-control" placeholder='CNP...' maxlength="13" #modal.cnp="ngModel" required/>
+        <div *ngIf="modal.cnp.invalid && (modal.cnp.dirty || modal.cnp.touched)" class="alert alert-danger">
+          <div *ngIf="modal.cnp.errors.required">CNP-ul este obligatoriu.</div>
+      </div>
+      </div>
+      
+      <label class='col-5 p-2 text-start'>Vârstă*</label>
+      <div class='col-1'>
+        <input [(ngModel)]='modal.age' class='form-control' placeholder='Vârstă...' [value]='calculateAgeFromCNP(modal.cnp)' #modal.age="ngModel" required/>    <!-- Input for age, which can be automatically calculated from the CNP entered -->
+        <div *ngIf="modal.age.invalid && (modal.age.dirty || modal.age.touched)" class="alert alert-danger">
+          <div *ngIf="modal.age.errors.required">Vârsta este obligatorie.</div>
+      </div>
+      </div>
+
+      <label class='col-5 p-2 text-start'>Lista mașini</label>
+      <div class='col-1'>
+        <ng-select 
+        [multiple]="true" 
+        [items]='modal.idcar' 
+        [(ngModel)]="selectedOptions" 
+        (change)="onSelectionChange($event)" 
+        #modal.idcar="ngModel"
+        required >                                                                                          <!--selector multiple witch allows users to make multiple selections from a list of options and binds these selections to the selectedOptions variable-->
+      </ng-select>
+        <div *ngIf="modal.idcar.invalid && (modal.idcar.dirty || modal.idcar.touched)" class="alert alert-danger">
+          <div *ngIf="modal.idcar.errors.required">Lista mașinilor este obligatorie.</div>
+      </div>        
+      </div>
+    </div>
+  </div>
+  
+  <div class='modal-footer'>
+    <button type='button' class='btn btn-outline-dark' (click)='activeModal.dismiss()'>Renunță</button>     <!--close the modal without saving the changes-->
+    <button type='button' class='btn btn-success' (click)='save()'>Salvează</button>
+  </div>
