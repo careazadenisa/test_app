@@ -26,11 +26,11 @@ module.exports = db => {
       },
   
       destroy: (req, res) => {
-        //const personId = req.params.idperson;
-        db.query(`DELETE FROM "person" WHERE idperson = ${req.params.idperson}`,
+        const personId = req.params.idperson;
+        db.query(`DELETE FROM "person" WHERE idperson = ${personId}`,
          { type: db.QueryTypes.DELETE })
          .then(() => {
-          return db.query(`DELETE FROM "Junction" WHERE id_person=${req.params.idperson}`, 
+          return db.query(`DELETE FROM "Junction" WHERE id_person=${personId}`, 
           { type: db.QueryTypes.DELETE});
          })
          .then(() => {
