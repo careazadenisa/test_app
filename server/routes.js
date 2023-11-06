@@ -12,6 +12,8 @@ module.exports = app => {
 
   app.use('/api/car', require('./routes/car')(app));
 
+  app.use('/api/junction', require('./routes/junction')(app));
+
   app.route('*/:url(api|auth|components|app|bower_components|assets)/*').get(errors[404]);            //defines routing for handling authentication operations
 
   /* BUILD */

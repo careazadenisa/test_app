@@ -13,7 +13,7 @@ module.exports = db => {
       },
   
       findAll: (req, res) => {
-        db.query('SELECT idperson, firstname, lastname, cnp, age FROM person ORDER BY idperson', { type: db.QueryTypes.SELECT }).then(resp => {
+        db.query(`SELECT idperson, firstname, lastname, cnp, age FROM "person" ORDER BY idperson`, { type: db.QueryTypes.SELECT }).then(resp => {
           res.send(resp);
         }).catch(() => res.status(401));
       },
@@ -26,7 +26,14 @@ module.exports = db => {
       },
   
       destroy: (req, res) => {
-        db.query(`DELETE FROM "person" WHERE idperson = ${req.params.idperson}`, { type: db.QueryTypes.DELETE }).then(() => {
+        //const personId = req.params.idperson;
+        db.query(`DELETE FROM "person" WHERE idperson = ${req.params.idperson}`,
+         { type: db.QueryTypes.DELETE })
+         .then(() => {
+          return db.query(`DELETE FROM "Junction" WHERE id_person=${req.params.idperson}`, 
+          { type: db.QueryTypes.DELETE});
+         })
+         .then(() => {
           res.send({ success: true });
         }).catch(() => res.status(401));
       }

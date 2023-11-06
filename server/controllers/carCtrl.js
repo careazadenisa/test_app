@@ -28,7 +28,14 @@ module.exports = db => {
       },
   
       destroy: (req, res) => {
-        db.query(`DELETE FROM "car" WHERE idcar = ${req.params.idcar}`, { type: db.QueryTypes.DELETE }).then(() => {
+        //const carId = req.params.idcar;
+        db.query(`DELETE FROM "car" WHERE idcar = ${req.params.idcar}`,
+         { type: db.QueryTypes.DELETE })
+         .then(() => {
+          return db.query(`DELETE FROM "Junction" WHERE id_pcar=${ req.params.idcar}`, 
+          { type: db.QueryTypes.DELETE});
+         })
+         .then(() => {
           res.send({ success: true });
         }).catch(() => res.status(401));
       }
