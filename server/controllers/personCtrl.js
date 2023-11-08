@@ -26,12 +26,12 @@ module.exports = db => {
       },
   
       destroy: (req, res) => {
-        const personId = req.params.idperson;
+        const personId = req.params.idperson;                                                       //assigns the value of the idperson parameter from request object to the personId variable
         db.query(`DELETE FROM "person" WHERE idperson = ${personId}`,
          { type: db.QueryTypes.DELETE })
          .then(() => {
           return db.query(`DELETE FROM "Junction" WHERE id_person=${personId}`, 
-          { type: db.QueryTypes.DELETE});
+          { type: db.QueryTypes.DELETE});                                                           //deletes rows with the same id from the person and Junction tables
          })
          .then(() => {
           res.send({ success: true });

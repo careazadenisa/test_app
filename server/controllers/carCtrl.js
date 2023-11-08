@@ -32,8 +32,8 @@ module.exports = db => {
         db.query(`DELETE FROM "car" WHERE idcar = ${carId}`,
          { type: db.QueryTypes.DELETE })
          .then(() => {
-          return db.query(`DELETE FROM "Junction" WHERE id_pcar=${carId}`, 
-          { type: db.QueryTypes.DELETE});
+          return db.query(`DELETE FROM "Junction" WHERE id_car=${carId}`, 
+          { type: db.QueryTypes.DELETE});                                                         ////deletes rows with the same id from the car and Junction tables
          })
          .then(() => {
           res.send({ success: true });
