@@ -12,8 +12,17 @@ module.exports = (sequelize, DataType) => {
       tax: {
         type: DataType.DOUBLE
       }
+      // ,
+      // createdAt: {
+      //   type: DataType.DATE,
+      //   allowNull: true
+      // },
+      // updatedAt: {
+      //   type: DataType.DATE,
+      //   allowNull: true
+      // }
     }, {
-      timestamps: true                                              
+      timestamps: false                // false pt a nu mai crea createdAt si updatedAt                                              
     });
     /*
       Aceasta linie este comentata pentru a demonstra legatura dintre tabelul car si tabelul Post prin id
