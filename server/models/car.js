@@ -22,7 +22,7 @@ module.exports = (sequelize, DataType) => {
       //   allowNull: true
       // }
     }, {
-      timestamps: false                // false pt a nu mai crea createdAt si updatedAt                                              
+      timestamps: true                // false pt a nu mai crea createdAt si updatedAt                                              
     });
     /*
       Aceasta linie este comentata pentru a demonstra legatura dintre tabelul car si tabelul Post prin id

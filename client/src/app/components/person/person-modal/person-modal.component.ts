@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';                    
 import { NgxSpinnerService } from 'ngx-spinner';
 import { REPLACE_DIACRITICS } from 'src/app/utils/utils-input';                 //import REPLACE_DIACRITICS method
 import { ToastrService } from 'ngx-toastr';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-person-modal',

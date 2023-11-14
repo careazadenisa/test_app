@@ -9,8 +9,8 @@ module.exports = app => {
   router.get('/', informationCtrl.findAll);
   router.get('/:id', informationCtrl.find);
   router.delete('/:id', informationCtrl.destroy);
-  router.get('/person', informationCtrl.getPerson);                       // GET route for getting person data
-  router.get('/cars', informationCtrl.getCar);                            // GET route for getting car data
+  // router.get('/person', informationCtrl.getPerson);                       // GET route for getting person data
+  // router.get('/cars', informationCtrl.getCar);                            // GET route for getting car data
 
   return router;
 };

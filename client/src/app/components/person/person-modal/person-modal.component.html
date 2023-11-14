@@ -1,18 +1,19 @@
+
 <div class='modal-header'>
     <h4 class='modal-title'>{{id_person ? 'Modificare' : 'Adăugare'}} Persoana</h4>                       <!-- Header of the modal with the title "Modificare Persoana" or "Adaugare Persoana" depending on the value of id_person -->
 </div>
   
-  <div class='modal-body'>                                                                                <!-- The body section of the modal, which contains the entries for the person data -->
+  <div class='modal-body'>                                                                              <!-- The body section of the modal, which contains the entries for the person data -->
     <div class='row'>
       <label class='col-2 control-label'>Nume*</label>
-      <div class='col-9'>
-        <!-- Name input, which allows the user to enter the person's name -->
+      <div class='col-9'> 
         <input [(ngModel)]='modal.lastname' class='form-control' placeholder='Nume...' maxlength='255' #modal.lastname="ngModel" required/>
-        <!--ngModel is an Angular directive that binds to the model's lastname property-->
+        <!--ngModel is an Angular directive that binds to the modal's lastname property-->
         <!--#modal.lastname is a reference that allows us to access information about the current entry later in the template-->
         <!--required is an attribute that specifies that this field is required-->
         <div *ngIf="modal.lastname.invalid && (modal.lastname.dirty || modal.lastname.touched)" class="alert alert-danger">        <!--if the input is not valid and has been touched or modified by the user.-->
           <div *ngIf="modal.lastname.errors.required">Numele este obligatoriu.</div>                                               <!--than displays an error message-->
+            
       </div>
       </div>
     
