@@ -12,15 +12,6 @@ module.exports = (sequelize, DataType) => {
       tax: {
         type: DataType.DOUBLE
       }
-      // ,
-      // createdAt: {
-      //   type: DataType.DATE,
-      //   allowNull: true
-      // },
-      // updatedAt: {
-      //   type: DataType.DATE,
-      //   allowNull: true
-      // }
     }, {
       timestamps: true                // false pt a nu mai crea createdAt si updatedAt                                              
     });
