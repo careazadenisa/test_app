@@ -5,7 +5,7 @@
   <div class='modal-body'>
     <div class='row'>
       <label class='col-2 control-label'>Denumire marcă</label>
-      <div class='col-9'>
+      <div class='col-4'>
         <input [(ngModel)]='modal.brand' class='form-control' placeholder='Denumire marcă...' maxlength='255' #modal.brand="ngModel" required/>
         <div *ngIf="modal.brand.invalid && (modal.brand.dirty || modal.brand.touched)" class="alert alert-danger">
           <div *ngIf="modal.brand.errors.required">Marca este obligatorie.</div>
@@ -20,24 +20,24 @@
       </div>
       </div>
 
-      <label class='col-5 p-2 text-start'>Anul fabricației</label>
-      <div class='col-1'>
+      <label class='col-2 p-2 text-start'>Anul fabricației</label>
+      <div class='col-4'>
         <input [(ngModel)]='modal.fabricationyear' class="form-control" placeholder="Anul fabricatiei.." maxlength="4" #modal.fabricationyear="ngModel"/>
         <div *ngIf="modal.fabricationyear.invalid && (modal.fabricationyear.dirty || modal.fabricationyear.touched)" class="alert alert-danger">
           <div *ngIf="modal.fabricationyear.errors.required">Anul fabricației este obligatoriu.</div>
       </div>
       </div>
 
-      <label class='col-5 p-2 text-start'>Capacitate cilindrică</label>
-      <div class='col-1'>
+      <label class='col-2 p-2 text-start'>Capacitate cilindrică</label>
+      <div class='col-4'>
         <input [(ngModel)]='modal.cylindercapacity' class="form-control" placeholder="Capacitate cilindrică.." maxlength="4" #modal.cylindercapacity="ngModel"/>
         <div *ngIf="modal.cylindercapacity.invalid && (modal.cylindercapacity.dirty || modal.cylindercapacity.touched)" class="alert alert-danger">
           <div *ngIf="modal.cylindercapacity.errors.required">Capacitatea cilindrică este obligatorie.</div>
       </div>
       </div>
 
-      <label class='col-5 p-2 text-start'>Taxa de impozit</label>
-      <div class='col-1'>
+      <label class='col-2 p-2 text-start'>Taxa de impozit</label>
+      <div class='col-4'>
         <input [(ngModel)]='modal.tax' class="form-control" placeholder="Taxa de impozit" maxlength="4" #modal.tax="ngModel" (ngModelChange)="calculateTax()" required=""/>
         <div *ngIf="modal.tax.invalid && (modal.tax.dirty || modal.tax.touched)" class="alert alert-danger">
           <div *ngIf="modal.tax.errors.required">Taxa de impozit este obligatorie.</div>

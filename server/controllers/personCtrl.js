@@ -13,21 +13,21 @@ module.exports = db => {
       },
   
       findAll: (req, res) => {
-        db.query(`SELECT id, firstname, lastname, cnp, age FROM "person" ORDER BY id`, { type: db.QueryTypes.SELECT }).then(resp => {
+        db.query(`SELECT id, firstname, lastname, cnp, age FROM "Person" ORDER BY id`, { type: db.QueryTypes.SELECT }).then(resp => {
           res.send(resp);
         }).catch(() => res.status(401));
       },
   
       find: (req, res) => {
         db.query(`SELECT id, firstname, lastname, cnp, age
-        FROM "person"`, { type: db.QueryTypes.SELECT }).then(resp => {
+        FROM "Person"`, { type: db.QueryTypes.SELECT }).then(resp => {
           res.send(resp[0]);
         }).catch(() => res.status(401));
       },
   
       destroy: (req, res) => {
         const personId = req.params.id;                                                       //assigns the value of the idperson parameter from request object to the personId variable
-        db.query(`DELETE FROM "person" WHERE id = ${personId}`,
+        db.query(`DELETE FROM "Person" WHERE id = ${personId}`,
          { type: db.QueryTypes.DELETE })
          .then(() => {
           return db.query(`DELETE FROM "Junction" WHERE id_person=${personId}`, 

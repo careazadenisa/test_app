@@ -17,20 +17,20 @@
         <table class='table table-striped table-hover'>
           <thead>
             <tr class='table-bordered'>
-              <th width='60px' rowspan='2'>Număr Curent</th>
-              <th>Denumire marcă</th>
-              <th>Denumire model</th>
-              <th width='100px'>Anul fabricației</th>
-              <th width='60px'>Capacitate cilindrică</th>
-              <th width='60px'>Taxă de impozit</th>
+              <th width='20px' rowspan='2'>Număr Curent</th>
+              <th width='60px'>Denumire marcă</th>
+              <th width='60px'>Denumire model</th>
+              <th width='50px'>Anul fabricației</th>
+              <th width='50px'>Capacitate cilindrică</th>
+              <th width='40px'>Taxă de impozit</th>
               <th rowspan='2' width='70px'></th>
             </tr>
             <tr>
-              <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-              <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-              <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-              <th><input class='form-control input-xs' placeholder='Căutare...'></th>
-              <th><input class='form-control input-xs' placeholder='Căutare...'></th>
+              <th width='60px'><input class='form-control input-xs' placeholder='Căutare...'></th>
+              <th width='60px'><input class='form-control input-xs' placeholder='Căutare...'></th>
+              <th width='50px'><input class='form-control input-xs' placeholder='Căutare...'></th>
+              <th width='50px'><input class='form-control input-xs' placeholder='Căutare...'></th>
+              <th width='40px'><input class='form-control input-xs' placeholder='Căutare...'></th>
             </tr>
           </thead>
         </table>
@@ -44,12 +44,12 @@
           <table class='table table-hover table-striped table-bordered font-14 p-0'>
             <tbody>
               <tr *ngFor='let c of car.slice(0, limit); let i=index' (dblclick)='addEdit(c.id)' class='cursor-pointer'>
-                <td width='60px' class='text-center'>{{ nrCrt + i}}</td>
-                <td>{{c.brand}}</td>
-                <td width='100px' class='text-center'>{{c.modelcar}}</td>
-                <td width='60px' class='text-center'>{{c.fabricationyear}}</td>
-                <td width='100px' class='text-center'>{{c.cylindercapacity}}</td>
-                <td width='60px' class='text-center'>{{c.tax}}</td>
+                <td width='20px' class='text-center'>{{ nrCrt + i}}</td>
+                <td width='60px'>{{c.brand}}</td>
+                <td width='60px' class='text-center'>{{c.modelcar}}</td>
+                <td width='50px' class='text-center'>{{c.fabricationyear}}</td>
+                <td width='50px' class='text-center'>{{c.cylindercapacity}}</td>
+                <td width='40px' class='text-center'>{{c.tax}}</td>
                 <td width='30px' (click)='addEdit(c.id)' class='text-center' matTooltip='Modificare' matTooltipPosition='left'>
                   <fa-icon class='text-primary' [icon]='faEdit'></fa-icon>
                 </td>

@@ -46,6 +46,8 @@ export class PersonModalComponent implements OnInit {
       }).catch(() => this.toastr.error('Eroare la preluarea masinii!'));
     }
     this.loadCars(); // Încărcarea listei de mașini
+    this.loadJunctionCars(); // Încărcarea mașinilor asociate persoanei în cazul editării
+
   }
   
 
@@ -59,30 +61,22 @@ export class PersonModalComponent implements OnInit {
       this.toastr.error('Eroare la preluarea mașinilor!');
     });
   }
-  // save(): void {
-  //   this._spinner.show();
 
-  //   if (!this.id_person) {                                                      //if id_person is undefined             
-  //     axios.post('/api/person', this.modal).then(() => {                        //post in table
-  //       this._spinner.hide();
-  //       this.toastr.success('Persoana a fost salvată cu succes!');
-  //       this.activeModal.close();                                               //close the modal
-  //     }).catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
-  //   } else {                                                                    //if id_person defined
-  //     axios.put('/api/person', this.modal).then(() => {                         //put in table
-  //       this._spinner.hide();
-  //       this.toastr.success('Persoana a fost modificată cu succes!');
-  //       this.activeModal.close();
-  //     }).catch(() => this.toastr.error('Eroare la modificarea persoanei!'));
-  //   }
-  // }
-
+  loadJunctionCars(): void {
+    if (this.id_person) {
+      axios.get(`/api/junction/person/${this.id_person}`)
+        .then(({ data }) => {
+          this.modal.selectedCars = data;
+        })
+        .catch(() => this.toastr.error('Eroare la preluarea mașinilor asociate persoanei!'));
+    }
+  }
 
   save(): void {
    this._spinner.show();
 
-  if (!this.id_person) {
-    axios.post('/api/person', this.modal).then(({ data }) => {
+  if (!this.id_person) {                                                     //if id_person is undefined
+    axios.post('/api/person', this.modal).then(({ data }) => {               //post in table
       const newPersonId = data.id;
 
         if (this.modal.selectedCars && this.modal.selectedCars.length > 0) {
@@ -97,17 +91,17 @@ export class PersonModalComponent implements OnInit {
           .then(() => {
             this._spinner.hide();
             this.toastr.success('Persoana a fost salvată cu succes!');
-            this.activeModal.close();
+            this.activeModal.close();                                        //close the modal
           })
           .catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
-      } else {
+      } else {              
         this._spinner.hide();
         this.toastr.success('Persoana a fost salvată cu succes!');
         this.activeModal.close();
       }
     }).catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
-  } else {
-    axios.put('/api/person', this.modal).then(() => {
+  } else {                                                                  //if id_person defined
+    axios.put('/api/person', this.modal).then(() => {                       //put in table
         if (this.modal.selectedCars && this.modal.selectedCars.length > 0) {
           // Delete existing junction entries for the person
           axios.delete(`/api/junction/${this.id_person}`).then(() => {

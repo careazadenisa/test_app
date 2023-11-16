@@ -19,6 +19,8 @@ export class PersonComponent implements OnInit {                                
   limit: number = 70;                                                                           //data upload limit
   showBackTop: string = '';                                                                     //backTop button
   person: any = [];                                                                             //person array
+  cars: any = []; // Add cars array
+  junction: any = []; // Add junction array
   nrCrt: number = 1;
 
   constructor(                                                                                  //object init
@@ -31,14 +33,39 @@ export class PersonComponent implements OnInit {                                
 
   ngOnInit(): void {
     this.loadData();                                                                            //initializes the data on page load
+    this.loadCars(); // Load cars data
+    this.loadJunction(); // Load junction data
   }
 
   loadData = (): void => {                                                                      //method for loading data from database                    
     this._spinner.show();                                                                       //show loading spinner
     axios.get('/api/person').then(({ data }) => {                                               //makes a GET request to the API to get the person data           
       this.person = data;                                                                       //store the data in the "person" vector
-      this._spinner.hide();                                                                     //hide the spinner
-    }).catch(() => this.toastr.error('Eroare la preluare persoana!'));                          //error handling with catch method
+      // Pentru fiecare persoană, obține mașinile asociate
+    const carRequests = this.person.map((person: any) => {
+      return axios.get(`/api/junction/person/${person.id}`).then(({ data }) => {
+        person.cars = data;
+      });
+    });
+
+    Promise.all(carRequests)
+      .then(() => {
+        this._spinner.hide();
+      })
+      .catch(() => this.toastr.error('Eroare la preluarea datelor persoanei!'));
+  }).catch(() => this.toastr.error('Eroare la preluare persoana!'));                        //error handling with catch method
+  }
+  
+  loadCars = (): void => {
+    axios.get('/api/cars').then(({ data }) => {
+      this.cars = data;
+    }).catch(() => this.toastr.error('Eroare la preluare masini!'));
+  }
+
+  loadJunction = (): void => {
+    axios.get('/api/junction').then(({ data }) => {
+      this.junction = data;
+    }).catch(() => this.toastr.error('Eroare la preluare junction!'));
   }
 
   addEdit = (id_person?: number): void => {                                                     //id_person from modal
@@ -46,8 +73,11 @@ export class PersonComponent implements OnInit {                                
       size: 'lg', keyboard: false, backdrop: 'static'
     });               
     modalRef.componentInstance.id_person = id_person;                                           //Pass the ID of the person to the modal window
+    modalRef.componentInstance.cars = this.cars; // Pass cars data to modal
+    modalRef.componentInstance.junction = this.junction; // Pass junction data to modal
     modalRef.closed.subscribe(() => {                                                           // subscribes to the closed event of the modal window and defines an anonymous function that will be executed when the modal window closes
       this.loadData();
+    
     });
   }
 
