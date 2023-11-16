@@ -7,8 +7,8 @@ module.exports = app => {
     router.post('/', carCtrl.create);
     router.put('/', carCtrl.update);
     router.get('/', carCtrl.findAll);
-    router.get('/:idcar', carCtrl.find);
-    router.delete('/:idcar', carCtrl.destroy);
+    router.get('/:id', carCtrl.find);
+    router.delete('/:id', carCtrl.destroy);
   
     return router;
   };

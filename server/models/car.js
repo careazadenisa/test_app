@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-    let model = sequelize.define('car', {                           //define the modal for the "car" table using Sequelize
+    let model = sequelize.define('Car', {                           //define the modal for the "car" table using Sequelize
       brand: {
         type: DataType.TEXT
       },
@@ -9,11 +9,14 @@ module.exports = (sequelize, DataType) => {
       fabricationyear: {
         type: DataType.INTEGER
       },
+      cylindercapacity: {
+        type: DataType.INTEGER
+      },
       tax: {
-        type: DataType.DOUBLE
+        type: DataType.INTEGER
       }
     }, {
-      timestamps: true                // false pt a nu mai crea createdAt si updatedAt                                              
+      timestamps: true               // false pt a nu mai crea createdAt si updatedAt                                              
     });
     /*
       Aceasta linie este comentata pentru a demonstra legatura dintre tabelul car si tabelul Post prin id

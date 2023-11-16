@@ -33,6 +33,7 @@ module.exports = function getModels(sequelize, Sequelize) {
     {path: __dirname + '/information.js', sync: true},
     {path: __dirname + '/person.js', sync: true},
     {path: __dirname + '/car.js', sync: true},
+    {path: __dirname + '/junction.js', sync: true},
   ];
 
   const syncTables = [];

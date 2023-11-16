@@ -17,6 +17,7 @@ export class CarComponent implements OnInit {
   faTrashAlt = faTrashAlt; faEdit = faEdit; faChevronUp = faChevronUp; faPlus = faPlus;
   limit: number = 70; showBackTop: string = '';
   car: any = [];
+  nrCrt: number = 1;
 
   constructor(private _modal: NgbModal, private _spinner: NgxSpinnerService, private toastr: ToastrService) { SET_HEIGHT('view', 20, 'height'); }
 
@@ -45,7 +46,7 @@ export class CarComponent implements OnInit {
     modalRef.componentInstance.title = `Ștergere mașina`;
     modalRef.componentInstance.content = `<p class='text-center mt-1 mb-1'>Doriți să ștergeți mașina marca <b>${car.brand}</b>, modelul: <b>${car.modelcar}</b>?`;
     modalRef.closed.subscribe(() => {
-      axios.delete(`/api/car/${car.idcar}`).then(() => {                                                               //idcar from table
+      axios.delete(`/api/car/${car.id}`).then(() => {                                                               //id from table car
         this.toastr.success('Mașina a fost ștearsă cu succes!');
         this.loadData();
       }).catch(() => this.toastr.error('Eroare la ștergerea mașinii!'));

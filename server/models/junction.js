@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-    let model = sequelize.define('junction', {                                //define the model for the "person" table using Sequelize
+    let model = sequelize.define('Junction', {                                //define the model for the "person" table using Sequelize
       id_person: {
         type: DataType.INTEGER
       },

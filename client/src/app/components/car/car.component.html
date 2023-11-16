@@ -43,14 +43,14 @@
           </button>
           <table class='table table-hover table-striped table-bordered font-14 p-0'>
             <tbody>
-              <tr *ngFor='let c of car.slice(0, limit)' (dblclick)='addEdit(c.idcar)' class='cursor-pointer'>
-                <td width='60px' class='text-center'>Harcode 1</td>
+              <tr *ngFor='let c of car.slice(0, limit); let i=index' (dblclick)='addEdit(c.id)' class='cursor-pointer'>
+                <td width='60px' class='text-center'>{{ nrCrt + i}}</td>
                 <td>{{c.brand}}</td>
                 <td width='100px' class='text-center'>{{c.modelcar}}</td>
                 <td width='60px' class='text-center'>{{c.fabricationyear}}</td>
                 <td width='100px' class='text-center'>{{c.cylindercapacity}}</td>
                 <td width='60px' class='text-center'>{{c.tax}}</td>
-                <td width='30px' (click)='addEdit(c.idcar)' class='text-center' matTooltip='Modificare' matTooltipPosition='left'>
+                <td width='30px' (click)='addEdit(c.id)' class='text-center' matTooltip='Modificare' matTooltipPosition='left'>
                   <fa-icon class='text-primary' [icon]='faEdit'></fa-icon>
                 </td>
                 <td width='30px' (click)='delete(c)' class='text-center' matTooltip='Ștergere' matTooltipPosition='left'>

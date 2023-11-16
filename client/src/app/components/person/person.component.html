@@ -17,11 +17,11 @@
         <table class='table table-striped table-hover'>                                                     <!--create table-->
           <thead>
             <tr class='table-bordered'>
-              <th width='60px' rowspan='2'>Număr curent</th>
-              <th>Nume</th>
-              <th>Prenume</th>
+              <th width='20px' rowspan='2'>Număr curent</th>
+              <th width='70px'>Nume</th>
+              <th width='70px'>Prenume</th>
               <th width='100px'>CNP</th>
-              <th width='60px'>Vârstă</th>
+              <th width='20px'>Vârstă</th>
               <th rowspan='2' width='70px'></th>
             </tr>
             <tr>                                                                                            <!-- row for search filters -->
@@ -47,13 +47,13 @@
           </button>
           <table class='table table-hover table-striped table-bordered font-14 p-0'>
             <tbody>
-              <tr *ngFor='let p of person.slice(0, limit)' (dblclick)='addEdit(p.idperson)' class='cursor-pointer'>   <!-- display data about people using a *ngFor loop -->
-                <td width='60px' class='text-center'>Harcode 1</td>
-                <td>{{p.lastname}}</td>
-                <td width='100px' class='text-center'>{{p.firstname}}</td>
-                <td width='60px' class='text-center'>{{p.cnp}}</td>
-                <td width='100px' class='text-center'>{{p.age}}</td> 
-                <td width='30px' (click)='addEdit(p.idperson)' class='text-center' matTooltip='Modificare' matTooltipPosition='left'>     <!--click listener for addEdit button-->
+              <tr *ngFor='let p of person.slice(0, limit); let i=index' (dblclick)='addEdit(p.id)' class='cursor-pointer'>   <!-- display data about people using a *ngFor loop -->
+                <td width='20px' class='text-center'>{{nrCrt + i}}</td>
+                <td width='70px'>{{p.lastname}}</td>
+                <td width='70px' class='text-center'>{{p.firstname}}</td>
+                <td width='100px' class='text-center'>{{p.cnp}}</td>
+                <td width='20px' class='text-center'>{{p.age}}</td> 
+                <td width='30px' (click)='addEdit(p.id)' class='text-center' matTooltip='Modificare' matTooltipPosition='left'>     <!--click listener for addEdit button-->
                   <fa-icon class='text-primary' [icon]='faEdit'></fa-icon>
                 </td>
                 <td width='30px' (click)='delete(p)' class='text-center' matTooltip='Ștergere' matTooltipPosition='left'>                 <!--click listener for delete button-->

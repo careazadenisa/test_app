@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => {
-    let model = sequelize.define('person', {                                //define the model for the "person" table using Sequelize
+    let model = sequelize.define('Person', {                                //define the model for the "person" table using Sequelize
       firstname: {
         type: DataType.TEXT
       },
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataType) => {
         type: DataType.INTEGER
       }
     }, {
-      timestamps: true
+      timestamps: true                                   //nu creaza createAt si updateAt
     });
     /*
       Aceasta linie este comentata pentru a demonstra legatura dintre tabelul person si tabelul Post prin id

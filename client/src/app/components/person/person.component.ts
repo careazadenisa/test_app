@@ -19,6 +19,7 @@ export class PersonComponent implements OnInit {                                
   limit: number = 70;                                                                           //data upload limit
   showBackTop: string = '';                                                                     //backTop button
   person: any = [];                                                                             //person array
+  nrCrt: number = 1;
 
   constructor(                                                                                  //object init
     private _modal: NgbModal,                                                                   //gets an instance of the NgbModal service
@@ -57,7 +58,7 @@ export class PersonComponent implements OnInit {                                
     modalRef.componentInstance.title = `Ștergere persoana`;                                     //sets the value of the title property of the modalRef component
     modalRef.componentInstance.content = `<p class='text-center mt-1 mb-1'>Doriți să ștergeți persoana cu numele <b>${person.lastname}</b> și prenumele <b>${person.firstname}</b>?`;
     modalRef.closed.subscribe(() => {
-      axios.delete(`/api/person/${person.idperson}`).then(() => {                               //idperson from table person
+      axios.delete(`/api/person/${person.id}`).then(() => {                               //id from table person
         this.toastr.success('Persoana a fost ștearsă cu succes!');
         this.loadData();                                                                        //refresh table
       }).catch(() => this.toastr.error('Eroare la ștergerea persoanei!'));

@@ -6,7 +6,7 @@
   <div class='modal-body'>                                                                              <!-- The body section of the modal, which contains the entries for the person data -->
     <div class='row'>
       <label class='col-2 control-label'>Nume*</label>
-      <div class='col-9'> 
+      <div class='col-4'> 
         <input [(ngModel)]='modal.lastname' class='form-control' placeholder='Nume...' maxlength='255' #modal.lastname="ngModel" required/>
         <!--ngModel is an Angular directive that binds to the modal's lastname property-->
         <!--#modal.lastname is a reference that allows us to access information about the current entry later in the template-->
@@ -25,34 +25,27 @@
       </div>
       </div>
 
-      <label class='col-5 p-2 text-start'>CNP*</label>
-      <div class='col-1'>
+      <label class='col-2 p-2 text-start'>CNP*</label>
+      <div class='col-4'>
         <input [(ngModel)]='modal.cnp' class="form-control" placeholder='CNP...' maxlength="13" #modal.cnp="ngModel" required/>
         <div *ngIf="modal.cnp.invalid && (modal.cnp.dirty || modal.cnp.touched)" class="alert alert-danger">
           <div *ngIf="modal.cnp.errors.required">CNP-ul este obligatoriu.</div>
       </div>
       </div>
       
-      <label class='col-5 p-2 text-start'>Vârstă*</label>
-      <div class='col-1'>
+      <label class='col-2 p-2 text-start'>Vârstă*</label>
+      <div class='col-4'>
         <input [(ngModel)]='modal.age' class='form-control' placeholder='Vârstă...' [value]='calculateAgeFromCNP(modal.cnp)' #modal.age="ngModel" required/>    <!-- Input for age, which can be automatically calculated from the CNP entered -->
         <div *ngIf="modal.age.invalid && (modal.age.dirty || modal.age.touched)" class="alert alert-danger">
           <div *ngIf="modal.age.errors.required">Vârsta este obligatorie.</div>
       </div>
       </div>
 
-      <label class='col-5 p-2 text-start'>Lista mașini</label>
-      <div class='col-1'>
-        <ng-select 
-        [multiple]="true" 
-        [items]='modal.idcar' 
-        [(ngModel)]="selectedOptions" 
-        (change)="onSelectionChange($event)" 
-        #modal.idcar="ngModel"
-        required >                                                                                          <!--selector multiple witch allows users to make multiple selections from a list of options and binds these selections to the selectedOptions variable-->
-      </ng-select>
-        <div *ngIf="modal.idcar.invalid && (modal.idcar.dirty || modal.idcar.touched)" class="alert alert-danger">
-          <div *ngIf="modal.idcar.errors.required">Lista mașinilor este obligatorie.</div>
+      <label class='col-2 p-2 text-start'>Lista mașini</label>
+      <div class='col-4'>
+         <ng-select [items]="cars" [(ngModel)]="modal.cars" [multiple]="true" bindLabel="brand"  placeholder="Selectează mașini"></ng-select> <!-- (change)="onSelectionChange($event)" -->
+        <div *ngIf="modal.id.invalid && (modal.id.dirty || modal.id.touched)" class="alert alert-danger">
+          <div *ngIf="modal.id.errors.required">Lista mașinilor este obligatorie.</div>
       </div>        
       </div>
     </div>

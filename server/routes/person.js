@@ -8,8 +8,8 @@ module.exports = app => {
     router.post('/', personCtrl.create);                                                // POST route for creating new person
     router.put('/', personCtrl.update);                                                 // PUT route for updating existing person
     router.get('/', personCtrl.findAll);                                                // GET route to get all person
-    router.get('/:idperson', personCtrl.find);                                          // GET route for getting specific person by ID    
-    router.delete('/:idperson', personCtrl.destroy);                                    // DELETE route for deleting an person by ID         
+    router.get('/:id', personCtrl.find);                                          // GET route for getting specific person by ID    
+    router.delete('/:id', personCtrl.destroy);                                    // DELETE route for deleting an person by ID         
   
     return router;
   };

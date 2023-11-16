@@ -4,30 +4,39 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';                    
 import { NgxSpinnerService } from 'ngx-spinner';
 import { REPLACE_DIACRITICS } from 'src/app/utils/utils-input';                 //import REPLACE_DIACRITICS method
 import { ToastrService } from 'ngx-toastr';
-import { FormsModule } from '@angular/forms';
+
+type Car = {
+  id: number;
+  brand: string;
+};
 
 @Component({
   selector: 'app-person-modal',
   templateUrl: './person-modal.component.html'
 })
+
+
 export class PersonModalComponent implements OnInit {
   @Input() id_person: number | undefined;                                       //id_person can be set with values ​​from outside the component using @Input decorator
   id_car: number | undefined;
 
   modal = {} as any;                                                            //object to store modal data
+  
+  cars : any[] = [];
 
-  selectedOptions = [];                                                         //array to store selected options
+  selectedCars = [];
+
 
   constructor(private _spinner: NgxSpinnerService, public activeModal: NgbActiveModal, private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
-    if (this.id_person) {                                                       //if id_person is defined, loads the person's data
+    if (this.id_person) {
       this._spinner.show();
-      axios.get(`/api/person/${this.id_person}`).then(({ data }) => {           ////makes a GET request to the API to get the person data                 
-        this.modal = data;                                                      // store fetched person data in the modal object
+      axios.get(`/api/person/${this.id_person}`).then(({ data }) => {
+        this.modal = data;
         this._spinner.hide();
-      }).catch(() => this.toastr.error('Eroare la preluarea persoanei!'));
+      }).catch(() => this.toastr.error('Eroare la preluarea datelor persoanei!'));
     }
     if (this.id_car) {
       this._spinner.show();
@@ -36,25 +45,99 @@ export class PersonModalComponent implements OnInit {
         this._spinner.hide();
       }).catch(() => this.toastr.error('Eroare la preluarea masinii!'));
     }
+    this.loadCars(); // Încărcarea listei de mașini
   }
+  
+
+  loadCars(): void {
+    axios.get('/api/car').then(({ data }) => {
+      // this.cars = data;
+      // console.log('Lista de mașini:', this.cars);
+      this.cars = data.map((car: Car) => ({ id: car.id, brand: car.brand })); // Modificare format pentru ng-select
+    }).catch(error => {
+      console.error('Eroare la preluarea mașinilor', error);
+      this.toastr.error('Eroare la preluarea mașinilor!');
+    });
+  }
+  // save(): void {
+  //   this._spinner.show();
+
+  //   if (!this.id_person) {                                                      //if id_person is undefined             
+  //     axios.post('/api/person', this.modal).then(() => {                        //post in table
+  //       this._spinner.hide();
+  //       this.toastr.success('Persoana a fost salvată cu succes!');
+  //       this.activeModal.close();                                               //close the modal
+  //     }).catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
+  //   } else {                                                                    //if id_person defined
+  //     axios.put('/api/person', this.modal).then(() => {                         //put in table
+  //       this._spinner.hide();
+  //       this.toastr.success('Persoana a fost modificată cu succes!');
+  //       this.activeModal.close();
+  //     }).catch(() => this.toastr.error('Eroare la modificarea persoanei!'));
+  //   }
+  // }
+
 
   save(): void {
-    this._spinner.show();
+   this._spinner.show();
 
-    if (!this.id_person) {                                                      //if id_person is undefined             
-      axios.post('/api/person', this.modal).then(() => {                        //post in table
+  if (!this.id_person) {
+    axios.post('/api/person', this.modal).then(({ data }) => {
+      const newPersonId = data.id;
+
+        if (this.modal.selectedCars && this.modal.selectedCars.length > 0) {
+          const promises = this.modal.selectedCars.map((carId: number) => {
+          return axios.post('/api/junction', {
+            id_person: newPersonId,
+            id_car: carId
+          });
+        });
+
+        Promise.all(promises)
+          .then(() => {
+            this._spinner.hide();
+            this.toastr.success('Persoana a fost salvată cu succes!');
+            this.activeModal.close();
+          })
+          .catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
+      } else {
         this._spinner.hide();
         this.toastr.success('Persoana a fost salvată cu succes!');
-        this.activeModal.close();                                               //close the modal
-      }).catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
-    } else {                                                                    //if id_person defined
-      axios.put('/api/person', this.modal).then(() => {                         //put in table
+        this.activeModal.close();
+      }
+    }).catch(() => this.toastr.error('Eroare la salvarea persoanei!'));
+  } else {
+    axios.put('/api/person', this.modal).then(() => {
+        if (this.modal.selectedCars && this.modal.selectedCars.length > 0) {
+          // Delete existing junction entries for the person
+          axios.delete(`/api/junction/${this.id_person}`).then(() => {
+            // Add new junction entries for the selected cars
+            const promises = this.modal.selectedCars.map((carId: number) => {
+            return axios.post('/api/junction', {
+              id_person: this.id_person,
+              id_car: carId
+            });
+          });
+
+          Promise.all(promises)
+            .then(() => {
+              this._spinner.hide();
+              this.toastr.success('Persoana a fost modificată cu succes!');
+              this.activeModal.close();
+            })
+            .catch(() => this.toastr.error('Eroare la modificarea persoanei!'));
+        }).catch(() => this.toastr.error('Eroare la ștergerea joncțiunii pentru persoana existentă!'));
+      } else {
         this._spinner.hide();
         this.toastr.success('Persoana a fost modificată cu succes!');
         this.activeModal.close();
-      }).catch(() => this.toastr.error('Eroare la modificarea persoanei!'));
-    }
+      }
+    }).catch(() => this.toastr.error('Eroare la modificarea persoanei!'));
   }
+}
+
+  
+
 
   selectSearch(term: string, item: any): boolean {
     const isWordThere = [] as any;                                               //creates a vector to store the search results
@@ -70,30 +153,34 @@ export class PersonModalComponent implements OnInit {
   }
 
   
-  onSelectionChange(event: any) {                                                 //method for ng-select
-    this.selectedOptions = event;
+  onSelectionChange (selectedCars: any[]): void {
+    // selectedCars conține opțiunile selectate
+    this.modal.cars = selectedCars;
   }
 
-  calculateAgeFromCNP(cnp: any) {                                                 //method to calculate age from CNP
-    const year = parseInt(cnp.substring(1,3));                                    //extract the 2-3 digits that represent the year
-    const month = parseInt(cnp.substring(3,5));                                   //extract the digits 4-5 representing the month
-    const day = parseInt(cnp.substring(5,7));                                     //extract the digits 6-7 representing the day
-    const gender = parseInt(cnp.substring(0,1));                                  //extract the first digit, which represents the gender
-    //const currentYear = new Date().getFullYear();
-    let birthYear:number =0 ;                                                     //initializes the birth year variable
-    
-    if (gender === 1 || gender ===2) {                                            //determine first 2 digits from the year of birth based gender
-      birthYear = parseInt('19' + year);                                          //initializes birthYear and convert the string ('19' + year) to an integer
-    } else if (gender ===3 || gender ===4) {
-      birthYear = parseInt('18' + year);
-    } else if (gender ===5 || gender ===6) {
-      birthYear = parseInt('20' + year);
+
+  calculateAgeFromCNP(cnp: any): number {
+    const year = parseInt(cnp.substring(1, 3));
+    const month = parseInt(cnp.substring(3, 5));
+    const day = parseInt(cnp.substring(5, 7));
+    const gender = parseInt(cnp.substring(0, 1));
+    const currentYear = new Date().getFullYear();
+    let birthYear = 0;
+  
+    if (gender === 1 || gender === 2) {
+      birthYear = 1900 + year;
+    } else if (gender === 3 || gender === 4) {
+      birthYear = 1800 + year;
+    } else if (gender === 5 || gender === 6) {
+      birthYear = (year <= currentYear % 100) ? 2000 + year : 1900 + year;
     }
-    
-    const birthDate = new Date(birthYear, month -1 , day);                              //create a date of birth based on the year, month and day extracted from the CNP where the month is numbered from 0 (January) to 11 (December)
-    const ageInMilliseconds = new Date().getTime() - birthDate.getTime();               //calculates the difference in milliseconds between the current date and the date of birth
-    const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 *60 *24 *365.25));     //convert milliseconds to years about a leap year
-    
-    return ageInYears;                                                                  //return age in year
+  
+    const birthDate = new Date(birthYear, month - 1, day);
+    const ageInMilliseconds = new Date().getTime() - birthDate.getTime();
+    const ageInYears = Math.floor(ageInMilliseconds / (1000 * 60 * 60 * 24 * 365.25));
+  
+    return ageInYears;
   }
+  
 }
+

@@ -5,7 +5,7 @@ module.exports = app => {
     const router          = express.Router();                                           //create a router object to define API routes
   
 // Defining the API routes and binding them to the corresponding methods in the "junctionCtrl" controller
-    router.delete('/person/:idperson/car/:idcar', junctionCtrl.destroy);                                    // DELETE route for deleting an person by ID         
+    router.delete('/person/:id/car/:id', junctionCtrl.destroy);                                    // DELETE route for deleting an person by ID         
   
     return router;
   };

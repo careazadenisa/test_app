@@ -1,5 +1,5 @@
 const config         = require('./init/config').init();
-const PORT           = process.env.PORT || 8080;
+const PORT           = process.env.PORT || 3000;
 const app            = require("express")();
 const cors           = { origin: "http://127.0.0.1:3000", methods: ["GET", "POST"], transports: ['websocket'], credentials: true };
 const server         = require('http').createServer(app);
