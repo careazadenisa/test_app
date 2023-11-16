@@ -7,7 +7,8 @@ module.exports = db => {
       },
   
       list(req, res) {
-        return Junction
+        //return Junction
+        return db.models.Junction
           .findAll()
           .then(junctions => res.status(200).send(junctions))
           .catch(error => res.status(400).send(error));
