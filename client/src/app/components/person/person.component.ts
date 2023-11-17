@@ -19,9 +19,9 @@ export class PersonComponent implements OnInit {                                
   limit: number = 70;                                                                           //data upload limit
   showBackTop: string = '';                                                                     //backTop button
   person: any = [];                                                                             //person array
-  cars: any = []; // Add cars array
-  junction: any = []; // Add junction array
-  nrCrt: number = 1;
+  cars: any = [];                                                                               //add cars array
+  junction: any = [];                                                                           //add junction array
+  nrCrt: number = 1; 
 
   constructor(                                                                                  //object init
     private _modal: NgbModal,                                                                   //gets an instance of the NgbModal service
@@ -33,31 +33,39 @@ export class PersonComponent implements OnInit {                                
 
   ngOnInit(): void {
     this.loadData();                                                                            //initializes the data on page load
-    this.loadCars(); // Load cars data
-    this.loadJunction(); // Load junction data
+    this.loadCars();                                                                            //load cars data
+    this.loadJunction();                                                                        //load junction data
   }
 
+  // loadData = (): void => {                                                                      //method for loading data from database                    
+  //   this._spinner.show();                                                                       //show loading spinner
+  //   axios.get('/api/person').then(({ data }) => {                                               //makes a GET request to the API to get the person data           
+  //     this.person = data;                                                                       //store the data in the "person" vector
+  //     // pentru fiecare persoană, obține mașinile asociate
+  //   const carRequests = this.person.map((person: any) => {                                      //using the map method, an array of promises is created to get the data about the cars associated with each person
+  //      return axios.get(`/api/junction/person/${person.id}`).then(({ data }) => {               //wait for all created promises to complete
+  //       // return axios.get('/api/junction/person/:id_person').then(({ data }) => {
+  //       person.cars = data;
+  //     });
+  //   });
+
+  //   Promise.all(carRequests)
+  //     .then(() => {
+  //       this._spinner.hide();
+  //     })
+  //     .catch(() => this.toastr.error('Eroare la preluarea datelor persoanei!'));
+  // }).catch(() => this.toastr.error('Eroare la preluare persoana!'));                               //error handling with catch method
+  // }
   loadData = (): void => {                                                                      //method for loading data from database                    
     this._spinner.show();                                                                       //show loading spinner
     axios.get('/api/person').then(({ data }) => {                                               //makes a GET request to the API to get the person data           
       this.person = data;                                                                       //store the data in the "person" vector
-      // Pentru fiecare persoană, obține mașinile asociate
-    const carRequests = this.person.map((person: any) => {
-      return axios.get(`/api/junction/person/${person.id}`).then(({ data }) => {
-        person.cars = data;
-      });
-    });
-
-    Promise.all(carRequests)
-      .then(() => {
-        this._spinner.hide();
-      })
-      .catch(() => this.toastr.error('Eroare la preluarea datelor persoanei!'));
-  }).catch(() => this.toastr.error('Eroare la preluare persoana!'));                        //error handling with catch method
+      this._spinner.hide();                                                                     //hide the spinner
+    }).catch(() => this.toastr.error('Eroare la preluare persoana!'));                          //error handling with catch method
   }
-  
+
   loadCars = (): void => {
-    axios.get('/api/cars').then(({ data }) => {
+    axios.get('/api/car').then(({ data }) => {
       this.cars = data;
     }).catch(() => this.toastr.error('Eroare la preluare masini!'));
   }

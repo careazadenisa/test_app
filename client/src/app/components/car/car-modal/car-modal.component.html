@@ -38,7 +38,7 @@
 
       <label class='col-2 p-2 text-start'>Taxa de impozit</label>
       <div class='col-4'>
-        <input [(ngModel)]='modal.tax' class="form-control" placeholder="Taxa de impozit" maxlength="4" #modal.tax="ngModel" (ngModelChange)="calculateTax()" required=""/>
+        <input [(ngModel)]='modal.tax' class="form-control" placeholder="Taxa de impozit" maxlength="4" #modal.tax="ngModel" (ngModelChange)='calculateTax()' required=""/>
         <div *ngIf="modal.tax.invalid && (modal.tax.dirty || modal.tax.touched)" class="alert alert-danger">
           <div *ngIf="modal.tax.errors.required">Taxa de impozit este obligatorie.</div>
       </div>

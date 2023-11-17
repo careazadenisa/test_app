@@ -45,17 +45,16 @@ export class PersonModalComponent implements OnInit {
         this._spinner.hide();
       }).catch(() => this.toastr.error('Eroare la preluarea masinii!'));
     }
-    this.loadCars(); // Încărcarea listei de mașini
-    this.loadJunctionCars(); // Încărcarea mașinilor asociate persoanei în cazul editării
+    this.loadCars(); // incărcarea listei de mașini
+    this.loadJunctionCars(); // incărcarea mașinilor asociate persoanei în cazul editării
 
   }
   
-
   loadCars(): void {
     axios.get('/api/car').then(({ data }) => {
       // this.cars = data;
       // console.log('Lista de mașini:', this.cars);
-      this.cars = data.map((car: Car) => ({ id: car.id, brand: car.brand })); // Modificare format pentru ng-select
+      this.cars = data.map((car: Car) => ({ id: car.id, brand: car.brand })); 
     }).catch(error => {
       console.error('Eroare la preluarea mașinilor', error);
       this.toastr.error('Eroare la preluarea mașinilor!');
@@ -103,9 +102,9 @@ export class PersonModalComponent implements OnInit {
   } else {                                                                  //if id_person defined
     axios.put('/api/person', this.modal).then(() => {                       //put in table
         if (this.modal.selectedCars && this.modal.selectedCars.length > 0) {
-          // Delete existing junction entries for the person
+          // delete existing junction entries for the person
           axios.delete(`/api/junction/${this.id_person}`).then(() => {
-            // Add new junction entries for the selected cars
+            // add new junction entries for the selected cars
             const promises = this.modal.selectedCars.map((carId: number) => {
             return axios.post('/api/junction', {
               id_person: this.id_person,
@@ -149,7 +148,7 @@ export class PersonModalComponent implements OnInit {
   
   onSelectionChange (selectedCars: any[]): void {
     // selectedCars conține opțiunile selectate
-    this.modal.cars = selectedCars;
+    this.modal.selectedCars = selectedCars;
   }
 
 

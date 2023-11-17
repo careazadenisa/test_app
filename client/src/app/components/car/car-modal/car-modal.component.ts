@@ -58,14 +58,17 @@ export class CarModalComponent implements OnInit {
   }
 
   calculateTax(): void {                                                                    //calculates the tax based on the cylinder capacity 
-    const cylindercapacity = parseInt(this.modal.cylindercapacity, 10);                     //extract and convert the cylindrical capacity from the modal to an integer 
+     const cylindercapacity = parseInt(this.modal.cylindercapacity, 10);                     //extract and convert the cylindrical capacity from the modal to an integer 
 
     if (cylindercapacity < 1500) {                                                          //check the cylinder capacity value to determine the tax
-      this.modal.tax = '50';                                                                //if the cylinder capacity is less than 1500, tax is 50
+     this.modal.tax = '50';                                                             //if the cylinder capacity is less than 1500, tax is 50
     } else if (cylindercapacity > 1500 && cylindercapacity < 2000) {
       this.modal.tax = '100';
     } else if (cylindercapacity > 2000) {
       this.modal.tax = '200';
     }
+    
   }
+  
+
 }

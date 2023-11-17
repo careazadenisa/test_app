@@ -16,7 +16,8 @@ module.exports = db => {
 
       find: (req, res) => {
         const id_person = req.params.id_person;
-        db.query(`SELECT id_person, id_car FROM "Junction" WHERE id_person = ${id_person}`, { type: db.QueryTypes.SELECT })
+        db.query(`SELECT id_person, id_car FROM "Junction" WHERE id_person = ${id_person}`, 
+        { type: db.QueryTypes.SELECT })
         .then(resp => {
           const carIds = resp.map(entry => entry.id_car);
           res.send(carIds);
