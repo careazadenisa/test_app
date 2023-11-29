@@ -1,42 +1,42 @@
 module.exports = (sequelize, DataType) => {
-  const Junction = sequelize.define('Junction', {}, { timestamps: false });
-  Person.belongsToMany(Car, { through: Junction });
-  Car.belongsToMany(Person, { through: Junction });  
+  // const Junction = sequelize.define('Junction', {}, { timestamps: false });
+  // Person.belongsToMany(Car, { through: Junction });
+  // Car.belongsToMany(Person, { through: Junction });  
   
-//   let model = sequelize.define('Junction', {                                //define the model for the "person" table using Sequelize
-//       id_person: {
-//         type: DataType.INTEGER,
-//         references: {
-//           model: 'Person', // Numele tabelului Person
-//           key: 'id'
-//         }
-//       },
-//       id_car: {
-//         type: DataType.INTEGER,
-//         references: {
-//           model: 'Car', // Numele tabelului Car
-//           key: 'id'
-//         }
-//       }
-//     }, {
-//       timestamps: true
-//     });
-// //Definirea relației dintre Junction și Person
-//   model.belongsTo(sequelize.models.Person, {
-//     foreignKey: 'id_person'
-// ,    onDelete: 'CASCADE'
-//   });
+  let model = sequelize.define('Junction', {                                //define the model for the "person" table using Sequelize
+      id_person: {
+        type: DataType.INTEGER,
+        references: {
+          model: 'Person', // Numele tabelului Person
+          key: 'id'
+        }
+      },
+      id_car: {
+        type: DataType.INTEGER,
+        references: {
+          model: 'Car', // Numele tabelului Car
+          key: 'id'
+        }
+      }
+    }, {
+      timestamps: true
+    });
+//Definirea relației dintre Junction și Person
+  model.belongsTo(sequelize.models.Person, {
+    foreignKey: 'id_person'
+,    onDelete: 'CASCADE'
+  });
  
-//   // Definirea relației dintre Junction și Car
-//   model.belongsTo(sequelize.models.Car, {
-//     foreignKey: 'id_car'
-//     ,onDelete: 'CASCADE' 
-//   });
+  // Definirea relației dintre Junction și Car
+  model.belongsTo(sequelize.models.Car, {
+    foreignKey: 'id_car'
+    ,onDelete: 'CASCADE' 
+  });
 
-//     /*
-//       Aceasta linie este comentata pentru a demonstra legatura dintre tabelul person si tabelul Post prin id
-//     */
-//     // model.belongsTo(sequelize.models.Post, {foreignKey: 'id_post', onDelete: 'set null'});
-//     return model;
+    /*
+      Aceasta linie este comentata pentru a demonstra legatura dintre tabelul person si tabelul Post prin id
+    */
+    // model.belongsTo(sequelize.models.Post, {foreignKey: 'id_post', onDelete: 'set null'});
+    return model;
   };
   
